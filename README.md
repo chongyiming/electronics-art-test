@@ -22,11 +22,8 @@ You can check out deployed web app [here](https://electronic-arts.vercel.app)
 
 ## Framework, Language and Tool used
 
--NextJs
--Javascript
--React
--MongoDB
+NextJs, Javascript, React, MongoDB
 
 ## Assumptions made
 
--Each user has their own dynamic code but for now we will only fix the code to 000000
+Each user has their own dynamic code but for now we will only fix the code to 000000
