@@ -1,5 +1,6 @@
 import { ConnectDB } from "@/lib/config/db";
 import CodeModel from "@/lib/models/CodeModel";
+import mongoose from "mongoose";
 
 const { NextResponse } = require("next/server");
 const LoadDB = async () => {
@@ -9,7 +10,11 @@ const LoadDB = async () => {
 LoadDB();
 
 export async function GET(request) {
-  const existCode = await CodeModel.findOne({});
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+  const existCode = await CodeModel.findOne({
+    userId: new mongoose.Types.ObjectId(id),
+  });
   console.log(existCode);
   if (existCode.code !== null) {
     return NextResponse.json({ success: true, msg: existCode });

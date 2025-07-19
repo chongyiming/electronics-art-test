@@ -1,15 +1,18 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 const page = () => {
+  const param = useSearchParams();
+  const id = param.get("id");
   const router = useRouter();
   const [code, setCode] = useState(0);
   console.log(code);
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    const response = await axios.get("/api/code");
+
+    const response = await axios.get(`/api/code?id=${id}`);
     console.log(response);
     if (response.data.msg.code === code) {
       toast.success("Code is correct", {

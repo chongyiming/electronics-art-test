@@ -31,10 +31,11 @@ export default function Home() {
       }
     } else if (submitter === "Login") {
       const response = await axios.post("/api/user/login", formData);
+      console.log(response.data.msg[0]._id);
       if (response.data.success) {
-        toast.success(response.data.msg, {
+        toast.success("User found", {
           onClose: () => {
-            router.push("/code");
+            router.push(`/code?id=${response.data.msg[0]._id}`);
           },
         });
       } else {
@@ -62,6 +63,7 @@ export default function Home() {
           type="text"
           placeholder="Enter your email"
           required
+          pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
         ></input>
         <p className="text-xl mt-4">Password</p>
         <input
@@ -69,9 +71,10 @@ export default function Home() {
           onChange={onChangeHandler}
           value={data.password}
           className="w-full sm:w-[500px] mt-4 px-4 py-3 border"
-          type="text"
+          type="password"
           placeholder="Enter your password"
           required
+          minLength={6}
         ></input>
         <div className="gap-10 flex ">
           <button

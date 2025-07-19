@@ -1,6 +1,8 @@
 import { ConnectDB } from "@/lib/config/db";
 import UserModel from "@/lib/models/UserModel";
 import bcrypt from "bcryptjs";
+import CodeModel from "@/lib/models/CodeModel";
+import mongoose from "mongoose";
 
 const { NextResponse } = require("next/server");
 const LoadDB = async () => {
@@ -24,7 +26,13 @@ export async function POST(request) {
       existEmail[0].password
     );
     if (isPasswordValid) {
-      return NextResponse.json({ success: true, msg: "User found" });
+      const existCode = await CodeModel.findOneAndUpdate(
+        { userId: new mongoose.Types.ObjectId(existEmail[0]._id) },
+        { code: "000000" },
+        { upsert: true }
+      );
+
+      return NextResponse.json({ success: true, msg: existEmail });
     } else {
       return NextResponse.json({
         success: false,
