@@ -1,11 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-const page = () => {
-  const param = useSearchParams();
-  const id = param.get("id");
+const page = ({ searchParams }) => {
+  const id = searchParams?.id;
   const router = useRouter();
   const [code, setCode] = useState(0);
   console.log(code);
