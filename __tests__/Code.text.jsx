@@ -12,18 +12,23 @@ describe("Code", () => {
     useRouter.mockReturnValue({ push: jest.fn() });
   });
 
+  it("check when userid is not define", () => {
+    render(<Code searchParams={{}} />);
+    expect(screen.getByText("Please login first")).toBeInTheDocument();
+  });
+
   it("code field displays correct initial value", () => {
-    render(<Code />);
+    render(<Code searchParams={{ id: "687b7ee629b8c4729d6cf50f" }} />);
     const input = screen.getByTestId("codeField");
     expect(input).toHaveValue(0);
   });
 
   it("check for typing and submit the form for code", () => {
-    render(<Code />);
+    render(<Code searchParams={{ id: "687b7ee629b8c4729d6cf50f" }} />);
     const input = screen.getByTestId("codeField");
     const submitButton = screen.getByRole("button", { name: "Submit" });
-    fireEvent.change(input, { target: { value: "111111" } });
+    fireEvent.change(input, { target: { value: "000000" } });
     fireEvent.click(submitButton);
-    expect(input).toHaveValue(111111);
+    expect(input).toHaveValue(Number("000000"));
   });
 });

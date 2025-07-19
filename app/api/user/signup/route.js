@@ -9,6 +9,7 @@ const LoadDB = async () => {
 
 LoadDB();
 
+//check if user email is exist in User table
 export async function POST(request) {
   const formData = await request.formData();
 

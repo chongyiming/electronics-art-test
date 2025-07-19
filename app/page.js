@@ -14,6 +14,7 @@ export default function Home() {
     password: "",
   });
 
+  //When user click on submit button
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const submitter = e.nativeEvent.submitter.name;
@@ -21,6 +22,7 @@ export default function Home() {
     formData.append("email", data.email);
     formData.append("password", data.password);
 
+    //Check if button click is SignUp or Login
     if (submitter === "SignUp") {
       const response = await axios.post("/api/user/signup", formData);
       if (response.data.success) {
@@ -42,6 +44,7 @@ export default function Home() {
     }
   };
 
+  //When user change the value in email and password fields
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
