@@ -16,7 +16,6 @@ export default function Home() {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(e);
     const submitter = e.nativeEvent.submitter.name;
     const formData = new FormData();
     formData.append("email", data.email);
@@ -31,7 +30,6 @@ export default function Home() {
       }
     } else if (submitter === "Login") {
       const response = await axios.post("/api/user/login", formData);
-      console.log(response.data.msg[0]._id);
       if (response.data.success) {
         toast.success("User found", {
           onClose: () => {
@@ -48,7 +46,6 @@ export default function Home() {
     const name = event.target.name;
     const value = event.target.value;
     setData((data) => ({ ...data, [name]: value }));
-    console.log(data);
   };
 
   return (
@@ -56,6 +53,7 @@ export default function Home() {
       <form onSubmit={onSubmitHandler}>
         <p className="text-xl mt-4">Email</p>
         <input
+          data-testid="email"
           name="email"
           onChange={onChangeHandler}
           value={data.email}
@@ -67,6 +65,7 @@ export default function Home() {
         ></input>
         <p className="text-xl mt-4">Password</p>
         <input
+          data-testid="password"
           name="password"
           onChange={onChangeHandler}
           value={data.password}

@@ -22,7 +22,6 @@ export async function POST(request) {
     return NextResponse.json({ success: false, msg: "User already exist" });
   } else {
     await UserModel.create(userData);
-    console.log("User Saved");
     return NextResponse.json({ success: true, msg: "User added" });
   }
 }

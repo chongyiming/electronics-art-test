@@ -15,7 +15,6 @@ export async function GET(request) {
   const existCode = await CodeModel.findOne({
     userId: new mongoose.Types.ObjectId(id),
   });
-  console.log(existCode);
   if (existCode.code !== null) {
     return NextResponse.json({ success: true, msg: existCode });
   } else {

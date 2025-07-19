@@ -7,12 +7,10 @@ const page = ({ searchParams }) => {
   const id = searchParams?.id;
   const router = useRouter();
   const [code, setCode] = useState(0);
-  console.log(code);
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
     const response = await axios.get(`/api/code?id=${id}`);
-    console.log(response);
     if (response.data.msg.code === code) {
       toast.success("Code is correct", {
         onClose: () => {
@@ -25,7 +23,6 @@ const page = ({ searchParams }) => {
   };
 
   const onChangeHandler = (event) => {
-    console.log(event);
     const value = event.target.value;
     if (value.length < 7 && parseInt(value) >= 0) {
       setCode(value);
@@ -37,6 +34,7 @@ const page = ({ searchParams }) => {
       <form onSubmit={onSubmitHandler}>
         <input
           type="number"
+          data-testid="codeField"
           onChange={onChangeHandler}
           value={code}
           className="p-3 text-center h-10 rounded-lg mt-5 border border-gray-500 "
