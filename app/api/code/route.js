@@ -9,31 +9,14 @@ const LoadDB = async () => {
 LoadDB();
 
 export async function GET(request) {
-  const existCode = await CodeModel.find({});
-
-  const userData = {
-    email: `${formData.get("email")}`,
-    password: `${formData.get("password")}`,
-  };
-
-  const existEmail = await UserModel.find({ email: userData.email });
-  if (existEmail.length > 0) {
-    const isPasswordValid = await bcrypt.compare(
-      userData.password,
-      existEmail[0].password
-    );
-    if (isPasswordValid) {
-      return NextResponse.json({ success: true, msg: "User found" });
-    } else {
-      return NextResponse.json({
-        success: false,
-        msg: "Password is not correct",
-      });
-    }
+  const existCode = await CodeModel.findOne({});
+  console.log(existCode);
+  if (existCode.code !== null) {
+    return NextResponse.json({ success: true, msg: existCode });
   } else {
     return NextResponse.json({
       success: false,
-      msg: "User is not sign up yet",
+      msg: "Code not found",
     });
   }
 }

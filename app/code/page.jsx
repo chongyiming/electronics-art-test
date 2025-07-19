@@ -1,15 +1,25 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 const page = () => {
+  const router = useRouter();
   const [code, setCode] = useState(0);
+  console.log(code);
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(e);
-
-    const formData = new FormData();
-    formData.append("code", code);
-    const response = await axios.post("/api/user/signup", formData);
+    const response = await axios.get("/api/code");
+    console.log(response);
+    if (response.data.msg.code === code) {
+      toast.success("Code is correct", {
+        onClose: () => {
+          router.push("/homepage");
+        },
+      });
+    } else {
+      toast.error("Code is not correct");
+    }
   };
 
   const onChangeHandler = (event) => {
@@ -35,7 +45,7 @@ const page = () => {
             className="mt-8 w-20 h-10 bg-black text-white rounded-lg;
 "
           >
-            Login
+            Submit
           </button>
         </div>
       </form>

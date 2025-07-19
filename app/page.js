@@ -4,7 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function Home() {
   const router = useRouter();
 
@@ -22,20 +23,22 @@ export default function Home() {
     formData.append("password", data.password);
 
     if (submitter === "SignUp") {
-      await axios.post("/api/user/signup", formData);
-      setData({
-        email: "",
-        password: "",
-      });
+      const response = await axios.post("/api/user/signup", formData);
+      if (response.data.success) {
+        toast.success(response.data.msg);
+      } else {
+        toast.error(response.data.msg);
+      }
     } else if (submitter === "Login") {
       const response = await axios.post("/api/user/login", formData);
-      if (response.data.success === true) {
-        router.push("/code");
-      } else {
-        setData({
-          email: "",
-          password: "",
+      if (response.data.success) {
+        toast.success(response.data.msg, {
+          onClose: () => {
+            router.push("/code");
+          },
         });
+      } else {
+        toast.error(response.data.msg);
       }
     }
   };
